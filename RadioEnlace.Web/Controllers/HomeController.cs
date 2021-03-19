@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RadioEnlace.Web.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,7 +11,7 @@ namespace RadioEnlace.Web.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            return View(new HomeModel());
         }
 
         public ActionResult About()

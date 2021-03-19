@@ -1,13 +1,172 @@
-﻿@{
+﻿@model RadioEnlace.Web.Models.HomeModel
+
+@{
     ViewBag.Title = "Home Page";
 }
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
+<style type="text/css">
+    /* Set the size of the div element that contains the map */
+    #map-canvas {
+        height: 400px;
+        /* The height is 400 pixels */
+        width: 100%;
+        /* The width is the width of the web page */
+    }
+</style>
 
+
+<div class="jumbotron">
+    <h1>Mapa</h1>
+    <p class="lead">Selecciona puntos de posición del radio enlace.</p>
+
+    <div id="map-canvas"></div>
+    @*<p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>*@
+    <hr />
+    <div class="row">
+        <div class="col-md-6">
+            @Html.LabelFor(model => model.DistanceFlow, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.DistanceFlow, new
+       {
+           htmlAttributes = new
+           {
+               @class = "form-control",
+               maxlength = 70,
+               id = "ai_distanceflow",
+               @disabled = "disabled"
+
+           }
+       })
+
+        </div>
+        <div class="col-md-6">
+            @Html.LabelFor(model => model.HeadingFlow, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.HeadingFlow, new
+       {
+           htmlAttributes = new
+           {
+               @class = "form-control",
+               maxlength = 70,
+               id = "ai_headingflow",
+               @disabled = "disabled"
+
+           }
+       })
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            @Html.LabelFor(model => model.PartitionFlow, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.PartitionFlow, new
+       {
+           htmlAttributes = new
+           {
+               @class = "form-control",
+               maxlength = 70,
+               id = "ai_partitionflow"               
+
+           }
+       })
+
+        </div>  
+        <div class="col-md-6">
+            <br />
+            <input type="button" value="Calcular particiones." onclick="alert('seteando')" class="btn btn-primary rc-allow" id="btn" />
+        </div>
+    </div>
+    <div class="row" style="display:none">
+        <div class="col-md-6">
+            @Html.LabelFor(model => model.Latitude, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.Latitude, new
+       {
+           htmlAttributes = new
+           {
+               @class = "form-control latitud",
+               maxlength = 70,
+               id = "ai_Latitude"
+           }
+       })
+
+        </div>
+        <div class="col-md-6">
+            @Html.LabelFor(model => model.Longitude, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.Longitude, new
+       {
+           htmlAttributes = new
+           {
+               @class = "form-control longitude",
+               maxlength = 70,
+               id = "ai_Longitude"
+           }
+       })
+
+        </div>
+    </div>
+    <br />
+    <div class="row" style="display:none">
+        <div class="col-md-6">
+            <input type="button" value="Setear" onclick="alert('seteando')" class="btn btn-primary rc-allow" id="btn" />
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-md-6">
+            @Html.LabelFor(model => model.InitLatitude, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.InitLatitude, new
+       {
+           htmlAttributes = new
+           {
+               @class = "form-control",
+               maxlength = 70,
+               id = "ai_init_latitude"
+           }
+       })
+
+        </div>
+        <div class="col-md-6">
+            @Html.LabelFor(model => model.InitLongitude, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.InitLongitude, new
+       {
+           htmlAttributes = new
+           {
+               @class = "form-control",
+               maxlength = 70,
+               id = "ai_init_longitude"
+           }
+       })
+
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-md-6">
+            @Html.LabelFor(model => model.EndLatitude, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.EndLatitude, new
+       {
+           htmlAttributes = new
+           {
+               @class = "form-control",
+               maxlength = 70,
+               id = "ai_end_latitude"
+           }
+       })
+
+        </div>
+        <div class="col-md-6">
+            @Html.LabelFor(model => model.EndtLongitude, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.EndtLongitude, new
+       {
+           htmlAttributes = new
+           {
+               @class = "form-control",
+               maxlength = 70,
+               id = "ai_end_longitude"
+           }
+       })
+
+        </div>
+    </div>
+</div>
 <div class="row">
     <div class="col-md-4">
         <h2>Getting started</h2>
@@ -29,3 +188,39 @@
         <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
     </div>
 </div>
+
+<script type="text/javascript">
+
+
+    function InitAddress() {
+        if ($('.latitud').val() != '' && $('.longitude').val() != '') {
+            //Asignamos coordenadas
+            var lat = $('.latitud').val();
+            var lng = $('.longitude').val();
+
+            //asignamos autocomplete
+
+
+            pointAddress(lat, lng);
+        }
+    }
+
+    $(document).ready(function () {
+
+
+        //19.4980104,-99.1367475   esime
+        initializeMap('@Model.Latitude', '@Model.Longitude');
+        //InitAddress();
+
+
+
+        $('.changePointAddress').on("change", function () {
+            if ($('#form-address #ai_Latitude').val() == '' || $('#form-address #ai_Longitude').val() == '') { return; }
+            pointAddress($('#form-address #ai_Latitude').val(), $('#form-address #ai_Longitude').val());
+        });
+    }
+    );
+
+
+
+</script>
