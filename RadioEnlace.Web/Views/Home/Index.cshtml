@@ -191,6 +191,11 @@
 
 <script type="text/javascript">
 
+    routes = {};
+    routes.ProfileEarth = {
+            Execute: "@(Url.Action("Execute", "ProfileEarth"))"
+
+        };
 
     function InitAddress() {
         if ($('.latitud').val() != '' && $('.longitude').val() != '') {

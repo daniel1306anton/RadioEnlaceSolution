@@ -15,6 +15,7 @@ var geocoderEstablishment;
 var mapOptionsEstablishment;
 
 var markers = [];
+var partionFlows = [];
 var markerInit;
 var markerEnd;
 
@@ -115,12 +116,15 @@ function SetMarkerDivision() {
     var initLat = Number($('#ai_init_latitude').val());
     var initLong = Number($('#ai_init_longitude').val());
     var distance = Number($('#ai_distanceflow').val());
-
+    partionFlows = [];
     var sep = distance / partions;
-
+    var counter = 0;
     var latlonginit = new google.maps.LatLng(initLat, initLong);    
     const youNameIt = 'http://maps.google.com/mapfiles/ms/icons/blue-pushpin.png';
     for (var i = 1; i < partions; i++) {
+        counter = counter + sep;
+
+
         latlonginit = google.maps.geometry.spherical.computeOffset(latlonginit, sep, heading);
 
         markerObject = new google.maps.Marker({
@@ -131,11 +135,52 @@ function SetMarkerDivision() {
             icon: youNameIt
         });
 
-    }
-    
+        
+        var flow = {
+            Index: i,
+            Latitude: latlonginit.lat(),
+            longitude: latlonginit.lng(),
+            Distance: counter
+        };
 
+        partionFlows.push(flow);
+
+    }
+    ExecuteEarthProfile(sep);
 }
 
+function ExecuteEarthProfile(sepa) {
+
+    var modelJs = {
+        DistanceFlow: $('#ai_distanceflow').val(),
+        HeadingFlow: $('#ai_headingflow').val(),
+        InitLatitude: $('#ai_init_latitude').val(),
+        InitLongitude: $('#ai_init_longitude').val(),
+        EndLatitude: $('#ai_end_latitude').val(),
+        EndtLongitude: $('#ai_end_longitude').val(),
+        PartitionFlow: $('#ai_partitionflow').val(),
+        SeparateDistance: sepa,
+        PartitionList: partionFlows
+
+    };
+
+    var jsonString = JSON.stringify({ model: modelJs });
+    var jsonReq = JSON.parse(jsonString);
+
+    $.ajax({
+        url: "/ProfileEarth/Execute/",
+        data: jsonString,
+        type: "POST",
+        dataType: "json",
+        contentType: "application/json",        
+        success: function(result) {
+            alert('ok');
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert('Error saving corporate : \n' + xhr.responseText);
+        }
+    });
+}
 // This function updates text boxes values.
 function getCoords(lat, lng, markId = "") {
 

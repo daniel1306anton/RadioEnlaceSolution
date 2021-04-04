@@ -32,5 +32,7 @@ namespace RadioEnlace.Web.Models
         public string EndtLongitude { get; set; }
         [Display(ResourceType = typeof(PageResource), Name = "PartitionFlow")]
         public ushort PartitionFlow { get; set; }
+        public decimal SeparateDistance { get; set; }
+        public List<PartitionFlowModel> PartitionList { get; set; }
     }
 }
