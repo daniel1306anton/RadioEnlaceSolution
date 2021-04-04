@@ -83,7 +83,8 @@ function createMarker(lat, lng, markerObject, mapObject) {
 
     if (markerId === "markerInit") {
         markerInit = markerObject;
-    } else {
+    }
+    if (markerId === "markerEnd") {
         markerEnd = markerObject;
     }
 
@@ -105,6 +106,34 @@ function createMarker(lat, lng, markerObject, mapObject) {
     });
 
     markers.push(markerObject);
+}
+
+function SetMarkerDivision() {
+
+    var heading = $('#ai_headingflow').val();
+    var partions = Number($('#ai_partitionflow').val());
+    var initLat = Number($('#ai_init_latitude').val());
+    var initLong = Number($('#ai_init_longitude').val());
+    var distance = Number($('#ai_distanceflow').val());
+
+    var sep = distance / partions;
+
+    var latlonginit = new google.maps.LatLng(initLat, initLong);    
+    const youNameIt = 'http://maps.google.com/mapfiles/ms/icons/blue-pushpin.png';
+    for (var i = 1; i < partions; i++) {
+        latlonginit = google.maps.geometry.spherical.computeOffset(latlonginit, sep, heading);
+
+        markerObject = new google.maps.Marker({
+            position: latlonginit,
+            draggable: true, // Set draggable option as true
+            map: map,
+            id: "Division" + i,
+            icon: youNameIt
+        });
+
+    }
+    
+
 }
 
 // This function updates text boxes values.
