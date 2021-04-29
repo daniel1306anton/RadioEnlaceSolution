@@ -173,14 +173,103 @@ function ExecuteEarthProfile(sepa) {
         type: "POST",
         dataType: "json",
         contentType: "application/json",        
-        success: function(result) {
-            alert('ok');
+        success: function (result) {
+            if (result.Success === false) {
+
+                alert(result.ErrorMessage);
+            } else {
+                SetGraphs(result);
+                LoadPartial(result.TableData, "#result-table-data-earth");
+            }
+            
         },
         error: function(xhr, ajaxOptions, thrownError) {
             alert('Error saving corporate : \n' + xhr.responseText);
         }
     });
 }
+
+function LoadPartial(content, selector) {
+    if (typeof content !== "string") {
+        content = content.responseText;
+    }
+    return $(selector).html(content);
+}
+function SetGraphs(data) {
+    
+    var chart = new CanvasJS.Chart("chartLmContainer", {
+        animationEnabled: true,        
+        theme: "light1",//light1
+        title: {
+            text: "Elevation Earth (LM)"
+        },
+        data: [
+            {
+                // Change type to "bar", "splineArea", "area", "spline", "pie",etc.
+                type: "line",
+                dataPoints: JSON.parse(data.LmList.Content)
+            }
+        ]
+    });
+
+    chart.render();
+
+    var chartLa = new CanvasJS.Chart("chartLaContainer", {
+        animationEnabled: true,
+        //color: "#E83A15",
+        theme: "light2",//light1
+        title: {
+            text: "LA"
+        },
+        data: [
+            {
+                // Change type to "bar", "splineArea", "area", "spline", "pie",etc.
+                type: "line",
+                dataPoints: JSON.parse(data.LaList.Content)
+            }
+        ]
+    });
+
+    chartLa.render();
+
+    var chartHt = new CanvasJS.Chart("chartHtContainer", {
+        animationEnabled: true,
+        color: "#747474",
+        theme: "light2",//light1
+        title: {
+            text: "Ht"
+        },
+        data: [
+            {
+                // Change type to "bar", "splineArea", "area", "spline", "pie",etc.
+                type: "line",
+                dataPoints: JSON.parse(data.HtList.Content)
+            }
+        ]
+    });
+
+    chartHt.render();
+
+    var chartZf = new CanvasJS.Chart("chartZfContainer", {
+        animationEnabled: true,
+        color: "#EEDC44",
+        theme: "light2",//light1
+        title: {
+            text: "Zf"
+        },
+        data: [
+            {
+                // Change type to "bar", "splineArea", "area", "spline", "pie",etc.
+                type: "line",
+                dataPoints: JSON.parse(data.ZfList.Content)
+            }
+        ]
+    });
+
+    chartZf.render();
+
+}
+
 // This function updates text boxes values.
 function getCoords(lat, lng, markId = "") {
 

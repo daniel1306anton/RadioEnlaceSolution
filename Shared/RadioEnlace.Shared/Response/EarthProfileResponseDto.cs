@@ -18,7 +18,7 @@ namespace RadioEnlace.Shared.Response
         }
         public bool Success { get; set; }
         public List<ErrorDto> ErrorList { get; set; }
-        public decimal Distance { get; set; }
+        public double Distance { get; set; }
         public List<EarthProfileDto> EarthProfileList { get; set; }
     }
 }

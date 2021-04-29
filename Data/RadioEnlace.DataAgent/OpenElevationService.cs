@@ -18,6 +18,6 @@ namespace RadioEnlace.DataAgent
             this.service = service;
         }
         public OperationResult<OpenElevationResponseDto> GetElevationList(OpenElevationRequestDto request) =>
-            service.CallServicePost<OpenElevationRequestDto, OpenElevationResponseDto>(request, "api/v1/lookup");
+            service.CallServicePost<OpenElevationRequestDto, OpenElevationResponseDto>(request, string.Empty);//"api/v1/lookup");
     }
 }

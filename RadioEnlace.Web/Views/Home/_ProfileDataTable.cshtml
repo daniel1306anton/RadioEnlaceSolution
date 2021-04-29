@@ -1,0 +1,39 @@
+﻿@model RadioEnlace.Shared.Response.EarthProfileResponseDto
+
+
+    <table class="table table-striped table-bordered table-sm table-responsive">
+        <thead>
+            <tr>
+                <th scope="col">Nd</th>
+                <th scope="col">d1(km)</th>
+                <th scope="col">d2(km)</th>
+                <th scope="col">Lm(m)</th>
+                <th scope="col">La(m)</th>
+                <th scope="col">h(m)</th>
+                <th scope="col">ht(m)</th>
+                <th scope="col">rf(m)</th>
+                <th scope="col">Zf(m)</th>
+                <th scope="col">e(km)</th>
+                <th scope="col">e/Zf</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.EarthProfileList)
+            {
+            <tr>
+                <th scope="row">@item.IndexFlow</th>
+                <td>@item.DistanceInitKm</td>
+                <td>@item.DistanceEndKm</td>
+                <td>@item.Lm</td>
+                <td>@item.La</td>
+                <td>@item.H</td>
+                <td>@item.Ht</td>
+                <td>@item.Rf</td>
+                <td>@item.Zf</td>
+                <td>@item.E</td>
+                <td>@item.EZf</td>
+            </tr>
+
+            }
+        </tbody>
+    </table>

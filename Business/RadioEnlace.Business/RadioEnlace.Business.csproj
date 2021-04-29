@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CalculateProfileEarth.cs" />
     <Compile Include="HandleEarthProfileProcess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SetElevationEarth.cs" />

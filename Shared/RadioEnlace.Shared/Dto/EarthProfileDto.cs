@@ -9,15 +9,19 @@ namespace RadioEnlace.Shared.Dto
     public class EarthProfileDto
     {
         public uint IndexFlow { get; set; }
-        public decimal DistanceInit { get; set; }
-        public decimal DistanceEnd { get; set; }
-        public uint Lm { get; set; }
-        public decimal La { get; set; }
-        public decimal H { get; set; }
-        public decimal Ht { get; set; }
-        public decimal Rf { get; set; }
-        public decimal Zf { get; set; }
-        public decimal E { get; set; }
-        public decimal EZf { get; set; }
+        public double DistanceInit { get; set; }
+        public double DistanceInitKm => DistanceInit / 1000;
+        public double DistanceEnd { get; set; }
+        public double DistanceEndKm => DistanceEnd / 1000;
+        public decimal Latitude { get; set; }
+        public decimal Longitude { get; set; }
+        public double Lm { get; set; }
+        public double La { get; set; }
+        public double H { get; set; }
+        public double Ht { get; set; }
+        public double Rf { get; set; }
+        public double Zf { get; set; }
+        public double E { get; set; }
+        public double EZf { get; set; }
     }
 }

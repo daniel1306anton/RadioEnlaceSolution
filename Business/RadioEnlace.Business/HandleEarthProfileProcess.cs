@@ -25,6 +25,7 @@ namespace RadioEnlace.Business
             }
             var earthProfileList = processElevation.Result;
 
+            earthProfileList = new CalculateProfileEarth().Execute(earthProfileList,request);
             response.Distance = request.Distance;
             response.EarthProfileList = earthProfileList;
             return response;
