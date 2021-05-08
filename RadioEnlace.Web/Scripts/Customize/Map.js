@@ -151,6 +151,8 @@ function SetMarkerDivision() {
 
 function ExecuteEarthProfile(sepa) {
 
+    
+    $('#buttonExecute').prop('disabled', true);
     var modelJs = {
         DistanceFlow: $('#ai_distanceflow').val(),
         HeadingFlow: $('#ai_headingflow').val(),
@@ -159,6 +161,11 @@ function ExecuteEarthProfile(sepa) {
         EndLatitude: $('#ai_end_latitude').val(),
         EndtLongitude: $('#ai_end_longitude').val(),
         PartitionFlow: $('#ai_partitionflow').val(),
+        H1: $('#ai_h1').val(),
+        H2: $('#ai_h2').val(),
+        Frequency: $('#ai_Frequency').val(),
+        At: $('#ai_at').val(),
+        Bt: $('#ai_bt').val(),
         SeparateDistance: sepa,
         PartitionList: partionFlows
 
@@ -179,7 +186,13 @@ function ExecuteEarthProfile(sepa) {
                 alert(result.ErrorMessage);
             } else {
                 SetGraphs(result);
-                LoadPartial(result.TableData, "#result-table-data-earth");
+                $('#chartTableDataModal').on('shown.bs.modal', function () {
+                    
+                    LoadPartial(result.TableData, "#result-table-data-earth");
+                });
+                LoadPartial(result.LinkRadio, "#linkEnlace");
+                LoadPartial(result.LinkRadio, "#linkEnlace2");
+                $("#dataEarth").css("display", "block");
             }
             
         },
@@ -195,78 +208,235 @@ function LoadPartial(content, selector) {
     }
     return $(selector).html(content);
 }
+
+
+
 function SetGraphs(data) {
+
+
+    var chartComplete = new CanvasJS.Chart("chartCompleteContainer", {
+        animationEnabled: true,        
+        title: {
+            text: "Gráfico conjugado de elevación terrestre."
+        },
+        axisX: {
+            title: "Distancia Antena 1 - Antena 2.",
+            suffix: "m"
+        },
+        axisY: {
+            title: "Elevación del terreno.",            
+            suffix: "m"
+        },
+        toolTip: {
+            shared: true
+        },
+        legend: {
+            cursor: "pointer",
+            verticalAlign: "top",
+            horizontalAlign: "center",
+            dockInsidePlotArea: true
+        },
+        data: [
+            {                
+                type: "line",
+                name: "Lm",
+                showInLegend: true,
+                markerSize: 0,
+                dataPoints: JSON.parse(data.LmList.Content)
+            },
+            {
+                type: "line",
+                name: "La",
+                showInLegend: true,
+                markerSize: 0,
+                dataPoints: JSON.parse(data.LaList.Content)
+            },
+            {
+                type: "line",
+                name: "Ht",
+                showInLegend: true,
+                markerSize: 0,
+                dataPoints: JSON.parse(data.HtList.Content)
+            },
+            {
+                type: "line",
+                name: "Zf",
+                showInLegend: true,
+                markerSize: 0,
+                dataPoints: JSON.parse(data.ZfList.Content)
+            }
+
+        ]
+    });
+
+    $('#chartCompleteContainerModal').on('shown.bs.modal', function () {
+        chartComplete.render();
+    });
+
+
     
+
     var chart = new CanvasJS.Chart("chartLmContainer", {
         animationEnabled: true,        
-        theme: "light1",//light1
+        theme: "light1",//light1        
         title: {
-            text: "Elevation Earth (LM)"
+            text: "Gráfico LM."
+        },
+        axisX: {
+            title: "Distancia Antena 1 - Antena 2.",
+            suffix: "m"
+        },
+        axisY: {
+            title: "Elevación del terreno.",
+            suffix: "m"
+        },
+        toolTip: {
+            shared: true
+        },
+        legend: {
+            cursor: "pointer",
+            verticalAlign: "top",
+            horizontalAlign: "center",
+            dockInsidePlotArea: true
         },
         data: [
             {
                 // Change type to "bar", "splineArea", "area", "spline", "pie",etc.
                 type: "line",
+                name: "Lm",
+                showInLegend: true,
+                markerSize: 0,
                 dataPoints: JSON.parse(data.LmList.Content)
             }
         ]
     });
 
-    chart.render();
+    
+
+    $('#chartLmContainerModal').on('shown.bs.modal', function () {
+        chart.render();
+    });
 
     var chartLa = new CanvasJS.Chart("chartLaContainer", {
         animationEnabled: true,
         //color: "#E83A15",
         theme: "light2",//light1
         title: {
-            text: "LA"
+            text: "Gráfico LA."
+        },
+        axisX: {
+            title: "Distancia Antena 1 - Antena 2.",
+            suffix: "m"
+        },
+        axisY: {
+            title: "Elevación del terreno.",
+            suffix: "m"
+        },
+        toolTip: {
+            shared: true
+        },
+        legend: {
+            cursor: "pointer",
+            verticalAlign: "top",
+            horizontalAlign: "center",
+            dockInsidePlotArea: true
         },
         data: [
             {
                 // Change type to "bar", "splineArea", "area", "spline", "pie",etc.
                 type: "line",
+                name: "La",
+                showInLegend: true,
+                markerSize: 0,
                 dataPoints: JSON.parse(data.LaList.Content)
             }
         ]
     });
 
-    chartLa.render();
+    
+    $('#chartLaContainerModal').on('shown.bs.modal', function () {
+        chartLa.render();
+    });
 
     var chartHt = new CanvasJS.Chart("chartHtContainer", {
-        animationEnabled: true,
-        color: "#747474",
+        animationEnabled: true,        
         theme: "light2",//light1
         title: {
-            text: "Ht"
+            text: "Gráfico Ht."
+        },
+        axisX: {
+            title: "Distancia Antena 1 - Antena 2.",
+            suffix: "m"
+        },
+        axisY: {
+            title: "Elevación del terreno.",
+            suffix: "m"
+        },
+        toolTip: {
+            shared: true
+        },
+        legend: {
+            cursor: "pointer",
+            verticalAlign: "top",
+            horizontalAlign: "center",
+            dockInsidePlotArea: true
         },
         data: [
             {
                 // Change type to "bar", "splineArea", "area", "spline", "pie",etc.
                 type: "line",
+                name: "Ht",
+                showInLegend: true,
+                markerSize: 0,
                 dataPoints: JSON.parse(data.HtList.Content)
             }
         ]
     });
 
-    chartHt.render();
+    
+    $('#chartHtContainerModal').on('shown.bs.modal', function () {
+        chartHt.render();
+    });
+    
 
     var chartZf = new CanvasJS.Chart("chartZfContainer", {
-        animationEnabled: true,
-        color: "#EEDC44",
+        animationEnabled: true,        
         theme: "light2",//light1
         title: {
-            text: "Zf"
+            text: "Gráfico Zf."
+        },
+        axisX: {
+            title: "Distancia Antena 1 - Antena 2.",
+            suffix: "m"
+        },
+        axisY: {
+            title: "Elevación del terreno.",
+            suffix: "m"
+        },
+        toolTip: {
+            shared: true
+        },
+        legend: {
+            cursor: "pointer",
+            verticalAlign: "top",
+            horizontalAlign: "center",
+            dockInsidePlotArea: true
         },
         data: [
             {
                 // Change type to "bar", "splineArea", "area", "spline", "pie",etc.
                 type: "line",
+                name: "Zf",
+                showInLegend: true,
+                markerSize: 0,
                 dataPoints: JSON.parse(data.ZfList.Content)
             }
         ]
     });
 
-    chartZf.render();
+    $('#chartZfContainerModal').on('shown.bs.modal', function () {
+        chartZf.render();
+    });   
 
 }
 

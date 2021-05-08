@@ -14,7 +14,7 @@ namespace RadioEnlace.Factory
 
         public string Password => GetValue("PassOpenElevation");
 
-        public string Url => GetValue("UrlOpenElevation");
+        public string Url => GetValue("ApiOpenToPoData");
 
         private string GetValue(string parameter)
         {

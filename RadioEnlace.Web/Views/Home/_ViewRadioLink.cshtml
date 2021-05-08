@@ -1,0 +1,14 @@
+﻿@model RadioEnlace.Shared.Response.EarthProfileResponseDto
+
+@if (Model.IsGoodLink)
+{
+    <div style="width: 200px; height:210px;background-position:center;background-repeat:no-repeat;background-image:url('../../Image/GoodLink.PNG')">
+
+    </div>
+}
+else
+{
+    <div style="width: 200px; height:210px;background-position:center;background-repeat:no-repeat;background-image:url('../../Image/BadLink.png')">
+
+    </div>
+}

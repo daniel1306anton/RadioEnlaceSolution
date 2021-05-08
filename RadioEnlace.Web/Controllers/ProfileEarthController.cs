@@ -24,6 +24,11 @@ namespace RadioEnlace.Web.Controllers
                 EndLatitude = Convert.ToDecimal(model.EndLatitude),
                 EndLongitude = Convert.ToDecimal(model.EndtLongitude),
                 PartitionSeparate = model.SeparateDistance,
+                H1 = Convert.ToDouble(model.H1),
+                H2 = Convert.ToDouble(model.H2),
+                At = Convert.ToDouble(string.IsNullOrWhiteSpace(model.At) ? "0" : model.At),
+                Bt = Convert.ToDouble(string.IsNullOrWhiteSpace(model.Bt) ? "0" : model.Bt),
+                Frequency = Convert.ToDouble(string.IsNullOrWhiteSpace(model.Frequency) ? "0" : model.Frequency),
                 PartitionList = model.PartitionList.Select(x => new Shared.Dto.CoordinateDto() { 
                     DistanceFlow = x.Distance,
                     IndexFlow = x.Index,
@@ -51,6 +56,7 @@ namespace RadioEnlace.Web.Controllers
                 var htList = Content(JsonConvert.SerializeObject(response.EarthProfileList.Select(dp => new DataPoint(dp.DistanceInit, dp.Ht)).ToList(), _jsonSetting), "application/json");
                 var zfList = Content(JsonConvert.SerializeObject(response.EarthProfileList.Select(dp => new DataPoint(dp.DistanceInit, dp.Zf)).ToList(), _jsonSetting), "application/json");
                 var tbTable = ConvertViewToString("~/Views/Home/_ProfileDataTable.cshtml", response);
+                var linkRadio = ConvertViewToString("~/Views/Home/_ViewRadioLink.cshtml", response);
                 return Json(new
                 {
                     Success = true,
@@ -58,7 +64,8 @@ namespace RadioEnlace.Web.Controllers
                     LaList = laList,
                     HtList = htList,
                     ZfList = zfList,
-                    TableData = tbTable
+                    TableData = tbTable,
+                    LinkRadio = linkRadio
                 });
             }
              

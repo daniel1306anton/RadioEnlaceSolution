@@ -12,9 +12,9 @@ namespace RadioEnlace.Business
     {
         const double DeltaNAbs = (double)54.75;//Constant Abs Delta N
         const double DeltaN = (double)-54.75;//Constant Abs Delta N
-        const double A = (double)0.25; //Superficie Terrestre
-        const double B = (double)0.5;//Factor clima y humedad
-        const double Fc = (double)5;//(Ghz) Frecuencia (factor de entrada)
+        double A = (double)0.25; //Superficie Terrestre
+        double B = (double)0.5;//Factor clima y humedad
+        double Fc = (double)5;//(Ghz) Frecuencia (factor de entrada)
         const double R = (double)0.99995;//Confiabilidad del radio enlace..
         const double Rorbit = (double)6373.02;//Radio terrestre
         double Fm;//Frecuencia de desvanecimiento
@@ -71,6 +71,18 @@ namespace RadioEnlace.Business
         }
         internal List<EarthProfileDto> Execute(List<EarthProfileDto> earthProfileList, EarthProfileRequestDto earthProfileRequest)
         {
+            if(earthProfileRequest.At != 0)
+            {
+                A = earthProfileRequest.At;
+            }
+            if (earthProfileRequest.Bt != 0)
+            {
+                B = earthProfileRequest.Bt;
+            }
+            if (earthProfileRequest.Frequency != 0)
+            {
+                Fc = earthProfileRequest.Frequency;
+            }
             H1 = earthProfileRequest.H1;
             H2 = earthProfileRequest.H2;
             Nd = earthProfileList.Count();
@@ -106,7 +118,7 @@ namespace RadioEnlace.Business
 
                 //Calculate Rf
                 // 17.32 * (RAIZ ( (d1*d2) / (Fc * d) ))
-                var rf1 = (earthPorfileArray[i].DistanceInit * earthPorfileArray[i].DistanceEnd);
+                var rf1 = (earthPorfileArray[i].DistanceInitKm * earthPorfileArray[i].DistanceEndKm);
                 var rf2 = rf1 / (Fc*d);
                 earthPorfileArray[i].Rf = 17.32 * Math.Sqrt(rf2);
 

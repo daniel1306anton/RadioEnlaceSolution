@@ -4,7 +4,9 @@
     ViewBag.Title = "Home Page";
 }
 
+    
 <style type="text/css">
+    
     /* Set the size of the div element that contains the map */
     #map-canvas {
         height: 400px;
@@ -16,7 +18,7 @@
 
 
 <div class="jumbotron">
-    <h1>Mapa</h1>
+    <h2>Localización de los enlaces.</h2>
     <p class="lead">Selecciona puntos de posición del radio enlace.</p>
 
     <div id="map-canvas"></div>
@@ -56,6 +58,36 @@
     </div>
     <div class="row">
         <div class="col-md-6">
+            @Html.LabelFor(model => model.H1, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.H1, new
+       {
+           htmlAttributes = new
+           {
+               @class = "form-control",
+               maxlength = 70,
+               id = "ai_h1"
+
+           }
+       })
+
+        </div>
+        <div class="col-md-6">
+            @Html.LabelFor(model => model.H2, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.H2, new
+       {
+           htmlAttributes = new
+           {
+               @class = "form-control",
+               maxlength = 70,
+               id = "ai_h2"
+
+           }
+       })
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
             @Html.LabelFor(model => model.PartitionFlow, htmlAttributes: new { @class = "control-label" })
             @Html.EditorFor(model => model.PartitionFlow, new
        {
@@ -63,15 +95,70 @@
            {
                @class = "form-control",
                maxlength = 70,
-               id = "ai_partitionflow"               
+               id = "ai_partitionflow"
 
            }
        })
 
-        </div>  
-        <div class="col-md-6">
+        </div>
+        <div class="col-md-3">
             <br />
-            <input type="button" value="Calcular particiones." onclick="SetMarkerDivision()" class="btn btn-primary rc-allow" id="btn" />
+            <input type="button" value="Calcular particiones." onclick="SetMarkerDivision()" id="buttonExecute" class="btn btn-primary rc-allow"/>
+        </div>
+        <div class="col-md-2">
+            <br />
+            <div type="button" id="buttonReset" class="btn btn-warning rc-allow">@Html.ActionLink("Resetear", "Index", "Home")</div>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            @Html.LabelFor(model => model.Frequency, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.Frequency, new
+       {
+           htmlAttributes = new
+           {
+               @class = "form-control terlambat",
+               maxlength = 70,
+               id = "ai_Frequency",
+               @disabled = "disabled"
+           }
+       })
+
+        </div>
+        <div class="col-md-4">
+            @Html.LabelFor(model => model.At, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.At, new
+       {
+           htmlAttributes = new
+           {
+               @class = "form-control terlambat",
+               maxlength = 70,
+               id = "ai_at",
+               @disabled = "disabled"
+           }
+       })
+
+        </div>
+        <div class="col-md-4">
+            @Html.LabelFor(model => model.Bt, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.Bt, new
+       {
+           htmlAttributes = new
+           {
+               @class = "form-control terlambat",
+               maxlength = 70,
+               id = "ai_bt",
+               @disabled = "disabled"
+           }
+       })
+
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-4">
+            <input type="button" value="Modificar datos." onclick="$('.terlambat').prop('disabled', false)" class="btn btn-primary rc-allow" id="btn" />
         </div>
     </div>
     <div class="row" style="display:none">
@@ -83,7 +170,8 @@
            {
                @class = "form-control latitud",
                maxlength = 70,
-               id = "ai_Latitude"
+               id = "ai_Latitude",
+               @disabled = "disabled"
            }
        })
 
@@ -96,7 +184,8 @@
            {
                @class = "form-control longitude",
                maxlength = 70,
-               id = "ai_Longitude"
+               id = "ai_Longitude",
+               @disabled = "disabled"
            }
        })
 
@@ -118,7 +207,8 @@
            {
                @class = "form-control",
                maxlength = 70,
-               id = "ai_init_latitude"
+               id = "ai_init_latitude",
+               @disabled = "disabled"
            }
        })
 
@@ -131,7 +221,8 @@
            {
                @class = "form-control",
                maxlength = 70,
-               id = "ai_init_longitude"
+               id = "ai_init_longitude",
+               @disabled = "disabled"
            }
        })
 
@@ -147,7 +238,8 @@
            {
                @class = "form-control",
                maxlength = 70,
-               id = "ai_end_latitude"
+               id = "ai_end_latitude",
+               @disabled = "disabled"
            }
        })
 
@@ -160,26 +252,157 @@
            {
                @class = "form-control",
                maxlength = 70,
-               id = "ai_end_longitude"
+               id = "ai_end_longitude",
+               @disabled = "disabled"
            }
        })
 
         </div>
     </div>
 </div>
-<div class="row">
-    <div id="chartLmContainer" style="height: 400px; width: 100%;"></div>
-    <div id="chartLaContainer" style="height: 400px; width: 100%;"></div>
-    <div id="chartHtContainer" style="height: 400px; width: 100%;"></div>
-    <div id="chartZfContainer" style="height: 400px; width: 100%;"></div>
-</div>
+<div id="dataEarth" style="display:none">
+    <div class="row">
+        <div class="col-md-3" id="linkEnlace"></div>
+        <div class="col-md-3">
+            <div type="button" class="btn btn-primary btn-lg" onclick="$('#chartCompleteContainerModal').modal('show')"
+                 style="width: 200px; height:210px;background-position:center;background-repeat:no-repeat;background-image:url('../../Image/Complete.PNG')">
+                <a style="color:black">Gráfico Completo.</a>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div type="button" class="btn btn-primary btn-lg" onclick="$('#chartTableDataModal').modal('show')"
+                 style="width: 200px; height:210px;background-position:center;background-repeat:no-repeat;background-image:url('../../Image/Tabla.PNG'">
+                <a style="color:black">Tabla de datos.</a>
+            </div>
+        </div>
+        <div class="col-md-3" id="linkEnlace2"></div>
+    </div>
+    <br />
+    <div class="row">
 
-<div class="row">
-    <div id="result-table-data-earth" class="col">
+        <div class="col-md-3">
+            <div type="button" class="btn btn-primary btn-lg" onclick="$('#chartLmContainerModal').modal('show')"
+                 style="width: 200px; height:210px;background-position:center;background-repeat:no-repeat;background-image:url('../../Image/LM.PNG')">
+                <a style="color:black">Gráfico LM.</a>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div type="button" class="btn btn-primary btn-lg" onclick="$('#chartLaContainerModal').modal('show')"
+                 style="width: 200px; height:210px;background-position:center;background-repeat:no-repeat;background-image:url('../../Image/LA.PNG')">
+                <a style="color:black">Gráfico LA.</a>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div type="button" class="btn btn-primary btn-lg" onclick="$('#chartHtContainerModal').modal('show')"
+                 style="width: 200px; height:210px;background-position:center;background-repeat:no-repeat;background-image:url('../../Image/HT.PNG')">
+                <a style="color:black">Gráfico HT.</a>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div type="button" class="btn btn-primary btn-lg" onclick="$('#chartZfContainerModal').modal('show')"
+                 style="width: 200px; height:210px;background-position:center;background-repeat:no-repeat;background-image:url('../../Image/ZF.PNG')">
+                <a style="color:black">Gráfico ZF.</a>
+            </div>
+        </div>
+
 
     </div>
+
+</div>
+<div class="modal fade" tabindex="-1" id="chartCompleteContainerModal" data-keyboard="false"
+     data-backdrop="static">
+    <div class="modal-dialog" style="width:95%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Gráfico Completo (Lm, La, Ht, Zf).</h4>
+                <button type="button" class="close" data-dismiss="modal">x</button>
+            </div>
+            <div class="modal-body" style="height:700px">
+                <div id="chartCompleteContainer" style="height: 600px; width: 100%;"></div>
+            </div>
+        </div>
+    </div>
+
 </div>
 
+<div class="modal fade" tabindex="-1" id="chartTableDataModal" data-keyboard="false"
+     data-backdrop="static">
+    <div class="modal-dialog" style="width:95%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Tabla de calculo de datos.</h4>
+                <button type="button" class="close" data-dismiss="modal">x</button>
+            </div>
+            <div class="modal-body" style="height:auto;overflow-y: auto;">
+                <div id="result-table-data-earth" style="height: 600px; width: 100%;"></div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="modal fade" tabindex="-1" id="chartLmContainerModal" data-keyboard="false"
+     data-backdrop="static">
+    <div class="modal-dialog" style="width:95%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Gráfico Lm.</h4>
+                <button type="button" class="close" data-dismiss="modal">x</button>
+            </div>
+            <div class="modal-body" style="height:700px">
+                <div id="chartLmContainer" style="height: 600px; width: 100%;"></div>                
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="modal fade" tabindex="-1" id="chartLaContainerModal" data-keyboard="false"
+     data-backdrop="static">
+    <div class="modal-dialog" style="width:95%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Gráfico La.</h4>
+                <button type="button" class="close" data-dismiss="modal">x</button>
+            </div>
+            <div class="modal-body" style="height:700px">
+                <div id="chartLaContainer" style="height: 600px; width: 100%;"></div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="modal fade" tabindex="-1" id="chartHtContainerModal" data-keyboard="false"
+     data-backdrop="static">
+    <div class="modal-dialog" style="width:95%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Gráfico Ht.</h4>
+                <button type="button" class="close" data-dismiss="modal">x</button>
+            </div>
+            <div class="modal-body" style="height:700px">
+                <div id="chartHtContainer" style="height: 600px; width: 100%;"></div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="modal fade" tabindex="-1" id="chartZfContainerModal" data-keyboard="false"
+     data-backdrop="static">
+    <div class="modal-dialog" style="width:95%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Gráfico Zf.</h4>
+                <button type="button" class="close" data-dismiss="modal">x</button>
+            </div>
+            <div class="modal-body" style="height:700px">
+                <div id="chartZfContainer" style="height: 600px; width: 100%;"></div>
+            </div>
+        </div>
+    </div>
+
+</div>
 
 <script type="text/javascript">
 
@@ -202,6 +425,7 @@
         }
     }
 
+    
     $(document).ready(function () {
 
 

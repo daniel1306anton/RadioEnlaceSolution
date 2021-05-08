@@ -61,6 +61,24 @@ namespace RadioEnlace.Web.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Superficie Terrestre..
+        /// </summary>
+        public static string At {
+            get {
+                return ResourceManager.GetString("At", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Factor clima y humedad..
+        /// </summary>
+        public static string Bt {
+            get {
+                return ResourceManager.GetString("Bt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Distancia (m)..
         /// </summary>
         public static string Distance {
@@ -84,6 +102,33 @@ namespace RadioEnlace.Web.Resource {
         public static string EndtLongitude {
             get {
                 return ResourceManager.GetString("EndtLongitude", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Frecuencia(Ghz)..
+        /// </summary>
+        public static string Frequency {
+            get {
+                return ResourceManager.GetString("Frequency", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Altura Antena 1 (m)..
+        /// </summary>
+        public static string H1 {
+            get {
+                return ResourceManager.GetString("H1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Altura Antena 2 (m)..
+        /// </summary>
+        public static string H2 {
+            get {
+                return ResourceManager.GetString("H2", resourceCulture);
             }
         }
         

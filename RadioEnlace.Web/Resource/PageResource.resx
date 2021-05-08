@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="At" xml:space="preserve">
+    <value>Superficie Terrestre.</value>
+  </data>
+  <data name="Bt" xml:space="preserve">
+    <value>Factor clima y humedad.</value>
+  </data>
   <data name="Distance" xml:space="preserve">
     <value>Distancia (m).</value>
   </data>
@@ -125,6 +131,15 @@
   </data>
   <data name="EndtLongitude" xml:space="preserve">
     <value>Longitud final.</value>
+  </data>
+  <data name="Frequency" xml:space="preserve">
+    <value>Frecuencia(Ghz).</value>
+  </data>
+  <data name="H1" xml:space="preserve">
+    <value>Altura Antena 1 (m).</value>
+  </data>
+  <data name="H2" xml:space="preserve">
+    <value>Altura Antena 2 (m).</value>
   </data>
   <data name="Heading" xml:space="preserve">
     <value>Heading  (grados).</value>

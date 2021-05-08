@@ -32,6 +32,16 @@ namespace RadioEnlace.Web.Models
         public string EndtLongitude { get; set; }
         [Display(ResourceType = typeof(PageResource), Name = "PartitionFlow")]
         public ushort PartitionFlow { get; set; }
+        [Display(ResourceType = typeof(PageResource), Name = "H1")]
+        public string H1 { get; set; }
+        [Display(ResourceType = typeof(PageResource), Name = "H2")]
+        public string H2 { get; set; }
+        [Display(ResourceType = typeof(PageResource), Name = "Frequency")]
+        public string Frequency { get; set; }
+        [Display(ResourceType = typeof(PageResource), Name = "At")]
+        public string At { get; set; }
+        [Display(ResourceType = typeof(PageResource), Name = "Bt")]
+        public string Bt { get; set; }
         public decimal SeparateDistance { get; set; }
         public List<PartitionFlowModel> PartitionList { get; set; }
     }

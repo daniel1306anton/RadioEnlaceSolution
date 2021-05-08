@@ -11,7 +11,12 @@ namespace RadioEnlace.Web.Controllers
     {
         public ActionResult Index()
         {
-            return View(new HomeModel());
+            return View(new HomeModel() { 
+                Frequency = "5",
+                At = "0.25",
+                Bt = "0.5"
+            
+            });
         }
 
         public ActionResult About()

@@ -20,5 +20,6 @@ namespace RadioEnlace.Shared.Response
         public List<ErrorDto> ErrorList { get; set; }
         public double Distance { get; set; }
         public List<EarthProfileDto> EarthProfileList { get; set; }
+        public bool IsGoodLink { get; set; }
     }
 }

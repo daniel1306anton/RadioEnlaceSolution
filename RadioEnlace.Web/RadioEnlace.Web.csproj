@@ -144,6 +144,16 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Image\BadLink.png" />
+    <Content Include="Image\Complete.PNG" />
+    <Content Include="Image\EscudoIpn.png" />
+    <Content Include="Image\GoodLink.PNG" />
+    <Content Include="Image\HT.PNG" />
+    <Content Include="Image\LA.PNG" />
+    <Content Include="Image\LM.PNG" />
+    <Content Include="Image\LogoEsime.png" />
+    <Content Include="Image\Tabla.PNG" />
+    <Content Include="Image\ZF.PNG" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
@@ -175,6 +185,7 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\_ProfileDataTable.cshtml" />
+    <Content Include="Views\Home\_ViewRadioLink.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

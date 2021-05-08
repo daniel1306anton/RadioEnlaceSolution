@@ -20,7 +20,7 @@ namespace RadioEnlace.Factory
             IDeserialize deserialize = new JsonDeserialize();
             ISerialize serialize = new JsonSerialize();
             Service service = new Service(serviceSecurity,deserialize,serialize);
-            IOpenElevationService openElevationService = new OpenElevationService(service);
+            IOpenElevationService openElevationService = new OpoElevationService(service,serviceSecurity.Url);
             SetElevationEarth setElevationEarth = new SetElevationEarth(openElevationService);
             return new HandleEarthProfileProcess(setElevationEarth);
 

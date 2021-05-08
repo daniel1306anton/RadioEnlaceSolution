@@ -17,6 +17,9 @@ namespace RadioEnlace.Shared.Request
         public decimal PartitionSeparate { get; set; }
         public double H1 { get; set; }
         public double H2 { get; set; }
+        public double Frequency { get; set; }
+        public double At { get; set; }
+        public double Bt { get; set; }
         public List<CoordinateDto> PartitionList { get; set; }
 
     }

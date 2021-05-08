@@ -28,6 +28,11 @@ namespace RadioEnlace.Business
             earthProfileList = new CalculateProfileEarth().Execute(earthProfileList,request);
             response.Distance = request.Distance;
             response.EarthProfileList = earthProfileList;
+            return CalculateGoodLink(response);
+        }
+        private EarthProfileResponseDto CalculateGoodLink(EarthProfileResponseDto response)
+        {
+            response.IsGoodLink = response.EarthProfileList.Any(x => x.Ht > x.Zf) ? false : true;
             return response;
         }
     }

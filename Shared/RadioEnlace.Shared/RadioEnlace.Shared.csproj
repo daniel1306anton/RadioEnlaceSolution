@@ -46,13 +46,16 @@
   <ItemGroup>
     <Compile Include="Common\ErrorDto.cs" />
     <Compile Include="Dto\CoordinateDto.cs" />
+    <Compile Include="Dto\CordinateOpoDto.cs" />
     <Compile Include="Dto\EarthProfileDto.cs" />
     <Compile Include="Dto\ElevationDto.cs" />
+    <Compile Include="Dto\ElevationOpoDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Request\EarthProfileRequestDto.cs" />
     <Compile Include="Request\OpenElevationRequestDto.cs" />
     <Compile Include="Response\EarthProfileResponseDto.cs" />
     <Compile Include="Response\OpenElevationResponseDto.cs" />
+    <Compile Include="Response\OpoElevationResponseDto.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
